@@ -21,6 +21,7 @@ bot.onText(/\/cdn (.+)/, async (msg, match) => {
 
 bot.onText(/ping/, (msg) => {
 	// Debug
+	console.log("ping from" + msg.chat.id);
 	bot.sendMessage(msg.chat.id, "pong");
 });
 
@@ -28,6 +29,7 @@ const photoUrl = 'https://api.telegram.org/file/bot' + token + '/'
 bot.on('photo', async (msg) => {
 	// Get image
 	const chatId = msg.chat.id;
+	console.log("CDN request from" + chatId);
 	if(!msg.photo) {
 		console.log("No data");
 		return
