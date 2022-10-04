@@ -38,19 +38,16 @@ bot.on('photo', async (msg) => {
 		const img = await bot.getFile(id);
 		const downloadURL = photoUrl + img.file_path;
 		db.get('SELECT imgurURL FROM images WHERE telegramURL = ?', downloadURL, async (err, row) => {
-			console.log("HERE");
 			if(err) {
 				console.log(err);
 				return;
 			}
 			if(row) {
-				console.log("Image found in database");
 				console.log(row);
 				bot.sendMessage(chatId, row.imgurURL);
 				return;
 			}
 			else{
-				console.log("Image not found in database");
 				const res = await imgurClient.upload({
 					image: downloadURL,
 					type: 'url'
