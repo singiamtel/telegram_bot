@@ -6,18 +6,12 @@ const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database('db.sqlite');
 db.run('CREATE TABLE IF NOT EXISTS images (telegramURL TEXT, imgurURL TEXT)');
 
-const token = process.env.TELEGRAM_TOKEN;
+const telegramToken = process.env.TELEGRAM_TOKEN;
+const bot = new TelegramBot(telegramToken, {polling: true});
 const imgurClient = new ImgurClient({ accessToken: process.env.IMGUR_TOKEN });
+const users_allowed = process.env.USERS_ALLOWED?.split(',');
 
-const bot = new TelegramBot(token, {polling: true});
 console.log("Ready");
-
-bot.onText(/\/cdn (.+)/, async (msg, match) => {
-	// 'msg' is the received Message from Telegram
-	// 'match' is the result of executing the regexp above on the text content of the message
-
-	bot.sendMessage(chatId, resp);
-});
 
 bot.onText(/ping/, (msg) => {
 	// Debug
@@ -25,8 +19,12 @@ bot.onText(/ping/, (msg) => {
 	bot.sendMessage(msg.chat.id, "pong");
 });
 
-const photoUrl = 'https://api.telegram.org/file/bot' + token + '/'
+const photoUrl = 'https://api.telegram.org/file/bot' + telegramToken + '/'
 bot.on('photo', async (msg) => {
+	if (!users_allowed?.includes(msg.chat.id.toString())) {
+		console.log("Unauthorized user tried to upload an image");
+		return;
+	}
 	// Get image
 	const chatId = msg.chat.id;
 	console.log("CDN request from" + chatId);
@@ -63,4 +61,4 @@ bot.on('photo', async (msg) => {
 		console.log(e);
 		bot.sendMessage(chatId, "Internal error");
 	}
-	});
+});
