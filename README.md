@@ -9,7 +9,7 @@ This bot implements some miscellaneous features that I use regularly. So far the
 So far it's not containerized, so the deployment is very manual
 
 ```bash
-git clone https://github.com/singiamtel/tele_bot
+git clone https://github.com/singiamtel/telegram_bot
 cat > .env << EOF
 TELEGRAM_TOKEN='<your_telegram_token>'
 IMGUR_TOKEN='<your_imgur_token>'
