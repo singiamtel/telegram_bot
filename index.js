@@ -21,8 +21,8 @@ bot.onText(/ping/, (msg) => {
 
 const photoUrl = 'https://api.telegram.org/file/bot' + telegramToken + '/'
 bot.on('photo', async (msg) => {
-	if (!users_allowed?.includes(msg.chat.id.toString())) {
-		console.log("Unauthorized user tried to upload an image");
+	if (users_allowed && !users_allowed.includes(msg.chat.id.toString())) {
+		console.log(new Date().toLocaleString() + ": Unauthorized user tried to upload an image");
 		return;
 	}
 	// Get image
