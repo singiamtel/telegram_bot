@@ -15,7 +15,7 @@ console.log("Ready");
 
 bot.onText(/ping/, (msg) => {
 	// Debug
-	console.log("ping from" + msg.chat.id);
+	console.log("ping from " + msg.chat.id);
 	bot.sendMessage(msg.chat.id, "pong");
 });
 
@@ -27,7 +27,7 @@ bot.on('photo', async (msg) => {
 	}
 	// Get image
 	const chatId = msg.chat.id;
-	console.log("CDN request from" + chatId);
+	console.log("CDN request from " + chatId);
 	if(!msg.photo) {
 		console.log("No data");
 		return
